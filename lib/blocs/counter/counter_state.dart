@@ -11,10 +11,6 @@ class CounterInitial extends CounterState {
   const CounterInitial() : super(0);
 }
 
-class CounterIncrementSuccess extends CounterState {
-  const CounterIncrementSuccess(super.countValue);
-}
-
-class CounterDecrementSuccess extends CounterState {
-  const CounterDecrementSuccess(super.countValue);
+class CounterUpdated extends CounterState {
+  const CounterUpdated(int value) : super(value);
 }
