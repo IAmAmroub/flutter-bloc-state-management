@@ -1,4 +1,5 @@
 import 'package:bloc_state_management_app/blocs/counter/counter_bloc.dart';
+import 'package:bloc_state_management_app/blocs/theme/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'ui/home_page.dart';
@@ -13,15 +14,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CounterBloc(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: ((context) => CounterBloc()),
         ),
-        home: const HomePage(),
+        BlocProvider(
+          create: ((context) => ThemeBloc()),
+        ),
+      ],
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: state.themeMode,
+            home: const HomePage(),
+          );
+        },
       ),
     );
   }
