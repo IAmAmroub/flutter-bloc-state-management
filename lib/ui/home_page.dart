@@ -1,4 +1,5 @@
 import 'package:bloc_state_management_app/blocs/counter/counter_bloc.dart';
+import 'package:bloc_state_management_app/blocs/theme/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +13,14 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.teal,
         centerTitle: true,
         title: const Text("BLoC State Management"),
+        actions: [
+          IconButton(
+            onPressed: (() {
+              context.read<ThemeBloc>().add(ToggleTheme());
+            }),
+            icon: const Icon(Icons.brightness_6),
+          ),
+        ],
       ),
       body: Center(
         child: BlocConsumer<CounterBloc, CounterState>(
