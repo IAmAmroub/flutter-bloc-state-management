@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
         title: const Text("BLoC State Management"),
       ),
       body: Center(
-        child: BlocListener<CounterBloc, CounterState>(
+        child: BlocConsumer<CounterBloc, CounterState>(
           listener: (context, state) {
             if (state.countValue == 10) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -24,51 +24,53 @@ class HomePage extends StatelessWidget {
               );
             }
           },
-          child: BlocBuilder<CounterBloc, CounterState>(
-            builder: ((context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Counter Value',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+          builder: (context, state) {
+            return BlocBuilder<CounterBloc, CounterState>(
+              builder: ((context, state) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Counter Value',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    '${state.countValue}',
-                    style: const TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(height: 16),
+                    Text(
+                      '${state.countValue}',
+                      style: const TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<CounterBloc>().add(DecrementCounter());
-                        },
-                        child: const Text("-"),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<CounterBloc>().add(IncrementCounter());
-                        },
-                        child: const Text("+"),
-                      ),
-                    ],
-                  )
-                ],
-              );
-            }),
-          ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<CounterBloc>().add(DecrementCounter());
+                          },
+                          child: const Text("-"),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<CounterBloc>().add(IncrementCounter());
+                          },
+                          child: const Text("+"),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              }),
+            );
+          },
         ),
       ),
     );
